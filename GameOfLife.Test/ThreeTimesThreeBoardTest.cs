@@ -181,5 +181,44 @@ public class ThreeTimesThreeBoardTest
             runNumber++;
         }
     }
+    
+    [Fact]
+    public void RunLifeThreeTimes_e3()
+    {
+        //using case #3
+        var boardValues = new List<LifeTypes>
+        {
+            LifeTypes.EitherOr, LifeTypes.EitherOr, LifeTypes.EitherOr,
+            LifeTypes.EitherOr, LifeTypes.Heart, LifeTypes.Heart,
+            LifeTypes.Heart, LifeTypes.Heart, LifeTypes.Heart,
+        };
+
+        var resultValues = boardValues.ToList();
+        const int maxRuns = 3;
+        var runNumber = 0;
+        while (runNumber < maxRuns)
+        {
+            _testOutputHelper.WriteLine($"(Run #{runNumber + 1}");
+            
+            var presetGenerator = new PresetPiecesGenerator(TOTAL_ROWS, TOTAL_COLUMNS, resultValues);
+
+            var board = new Board(TOTAL_ROWS, TOTAL_COLUMNS);
+            board.InitializeBoard(presetGenerator);
+            
+            var newValues = EvaluateLife.EvaluateBoard(board, _rules);
+
+            var index = 0;
+            foreach (var r in newValues) 
+            {
+                var rowPos = index / TOTAL_ROWS;
+                var colPos = index % TOTAL_COLUMNS;
+                _testOutputHelper.WriteLine($"({rowPos}, {colPos}) == {r.ToString()}");
+                index++;
+            }
+
+            resultValues = newValues.ToList();
+            runNumber++;
+        }
+    }
 
 }

@@ -59,12 +59,12 @@ public class Board
         return neighbours;
     }
 
-    // public LifeTypes GetPiece(int row, int col)
-    // {
-    //     CheckRowColInput(row, col);
-    //
-    //     return _board[row][col];
-    // }
+    public LifeTypes GetCell(int row, int col)
+    {
+        CheckRowColInput(row, col);
+    
+        return _board[row][col];
+    }
 
     private void CheckRowColInput(int row, int col)
     {

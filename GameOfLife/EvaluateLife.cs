@@ -8,10 +8,11 @@ public static class EvaluateLife
     public static LifeTypes EvaluateOne(int rowPos, int colPos, Board board, IList<ILifeRule> rules)
     {
         var neighbours = board.GetNeighbours(rowPos, colPos);
+        var currentCell = board.GetCell(rowPos, colPos);
 
         foreach (var rule in rules)
         {
-            var result = rule.Apply(rowPos, colPos, neighbours);
+            var result = rule.Apply(currentCell, neighbours);
             if (result != null)
             {
                 return result.Value;
