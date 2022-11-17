@@ -83,4 +83,9 @@ public class Board
             throw new AggregateException("The column value is out of bounds");
         }
     }
+
+    public IEnumerable<LifeTypes> GetPieces()
+    {
+        return _board.SelectMany(r => r.ToList());
+    }
 }

@@ -38,7 +38,7 @@ public class RandomPiecesGenerator: ILifePieceGenerator
             }
         }
 
-        var value = (LifeTypes)_random.Next(0, 2);
+        var value = (LifeTypes)_random.Next(0, 3);
         if (_memoryEnabled)
         {
             _memory[key] = value;
