@@ -21,4 +21,20 @@ public static class EvaluateLife
         // if nothing was found => it is unknown
         return LifeTypes.EitherOr;
     }
+
+    public static IList<LifeTypes> EvaluateBoard(Board board, IList<ILifeRule> rules)
+    {
+        var numberOfCells = board.Rows * board.Columns;
+        var newValues = new List<LifeTypes>();
+        for (var index = 0; index < numberOfCells; index++)
+        {
+            var rowPos = index / board.Rows;
+            var colPos = index % board.Columns;
+
+            var result = EvaluateOne(rowPos, colPos, board, rules);
+            newValues.Add(result);
+        }
+
+        return newValues;
+    }
 }
