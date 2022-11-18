@@ -7,7 +7,6 @@ namespace GameOfLife.Test;
 
 public class RandomBoardTest
 {
-    
     private readonly ITestOutputHelper _testOutputHelper;
     private const int TOTAL_ROWS = 3;
     private const int TOTAL_COLUMNS = 3;
@@ -24,7 +23,6 @@ public class RandomBoardTest
         };
     }
     
-    
     [Fact]
     public void RunLiveWithRandomizedInitialBoard()
     {
@@ -35,15 +33,8 @@ public class RandomBoardTest
         baseBoard.InitializeBoard(randomGenerator);
         var resultValues = baseBoard.GetPieces().ToList();
         {
-            var index = 0;
             _testOutputHelper.WriteLine($"(Base Run #0");
-            foreach (var r in resultValues) 
-            {
-                var rowPos = index / TOTAL_ROWS;
-                var colPos = index % TOTAL_COLUMNS;
-                _testOutputHelper.WriteLine($"({rowPos}, {colPos}) == {r.ToString()}");
-                index++;
-            }
+            Printing.PrettyPrintBoard(resultValues, TOTAL_COLUMNS, _testOutputHelper);
         }
 
         const int maxRuns = 3;
@@ -59,14 +50,7 @@ public class RandomBoardTest
             
             var newValues = EvaluateLife.EvaluateBoard(board, _rules);
 
-            var index = 0;
-            foreach (var r in newValues) 
-            {
-                var rowPos = index / TOTAL_ROWS;
-                var colPos = index % TOTAL_COLUMNS;
-                _testOutputHelper.WriteLine($"({rowPos}, {colPos}) == {r.ToString()}");
-                index++;
-            }
+            Printing.PrettyPrintBoard(newValues, TOTAL_COLUMNS, _testOutputHelper);
 
             resultValues = newValues.ToList();
             runNumber++;

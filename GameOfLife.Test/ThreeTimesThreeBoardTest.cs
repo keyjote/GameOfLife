@@ -107,10 +107,6 @@ public class ThreeTimesThreeBoardTest
     }
 
     
-    // TODO: fix following tests, they do not test anything, they just run things
-    // Will have to run the epochs manually in order to be able to predict its end result
-    // This is just for show that is can be done, but not a real test
-    
     [Fact]
     public void RunLifeOnce()
     {
@@ -127,18 +123,8 @@ public class ThreeTimesThreeBoardTest
         var board = new Board(TOTAL_ROWS, TOTAL_COLUMNS);
         board.InitializeBoard(presetGenerator);
 
-        var resultValues = new List<LifeTypes>();
-        var numberOfCells = TOTAL_ROWS * TOTAL_COLUMNS;
-
-        for (var index = 0; index < numberOfCells; index++)
-        {
-            var rowPos = index / TOTAL_ROWS;
-            var colPos = index % TOTAL_ROWS;
-            
-            var result = EvaluateLife.EvaluateOne(rowPos, colPos, board, _rules);
-            resultValues.Add(result);
-            _testOutputHelper.WriteLine($"({rowPos}, {colPos}) == {result.ToString()}");
-        }
+        var resultValues = EvaluateLife.EvaluateBoard(board, _rules);
+        Printing.PrettyPrintBoard(resultValues, TOTAL_COLUMNS, _testOutputHelper);
         
         Assert.Equal(LifeTypes.Heart, resultValues[4]); // (1,1)
     }
@@ -155,6 +141,8 @@ public class ThreeTimesThreeBoardTest
         };
 
         var resultValues = boardValues.ToList();
+        _testOutputHelper.WriteLine($"(Run #0");
+        Printing.PrettyPrintBoard(resultValues, TOTAL_COLUMNS, _testOutputHelper);
         const int maxRuns = 3;
         var runNumber = 0;
         while (runNumber < maxRuns)
@@ -167,15 +155,7 @@ public class ThreeTimesThreeBoardTest
             board.InitializeBoard(presetGenerator);
             
             var newValues = EvaluateLife.EvaluateBoard(board, _rules);
-
-            var index = 0;
-            foreach (var r in newValues) 
-            {
-                var rowPos = index / TOTAL_ROWS;
-                var colPos = index % TOTAL_COLUMNS;
-                _testOutputHelper.WriteLine($"({rowPos}, {colPos}) == {r.ToString()}");
-                index++;
-            }
+            Printing.PrettyPrintBoard(newValues, TOTAL_COLUMNS, _testOutputHelper);
 
             resultValues = newValues.ToList();
             runNumber++;
@@ -194,6 +174,9 @@ public class ThreeTimesThreeBoardTest
         };
 
         var resultValues = boardValues.ToList();
+        _testOutputHelper.WriteLine($"(Run #0");
+        Printing.PrettyPrintBoard(resultValues, TOTAL_COLUMNS, _testOutputHelper);
+        
         const int maxRuns = 3;
         var runNumber = 0;
         while (runNumber < maxRuns)
@@ -207,14 +190,7 @@ public class ThreeTimesThreeBoardTest
             
             var newValues = EvaluateLife.EvaluateBoard(board, _rules);
 
-            var index = 0;
-            foreach (var r in newValues) 
-            {
-                var rowPos = index / TOTAL_ROWS;
-                var colPos = index % TOTAL_COLUMNS;
-                _testOutputHelper.WriteLine($"({rowPos}, {colPos}) == {r.ToString()}");
-                index++;
-            }
+            Printing.PrettyPrintBoard(newValues, TOTAL_COLUMNS, _testOutputHelper);
 
             resultValues = newValues.ToList();
             runNumber++;
